@@ -1,0 +1,24 @@
+{
+  "name": "makincome-gym",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "web": "yarn workspace @makincome-gym/web dev",
+    "mobile": "yarn workspace makincome-gym start",
+    "build:web": "yarn workspace @makincome-gym/web build",
+    "build:mobile": "yarn workspace makincome-gym build",
+    "build:shared": "yarn workspace @makincome-gym/shared build",
+    "test": "yarn workspaces run test",
+    "lint": "yarn workspaces run lint"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "chart.js": "^4.4.9",
+    "react-calendar": "^6.0.0"
+  }
+}
