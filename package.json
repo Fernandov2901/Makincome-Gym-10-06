@@ -4,7 +4,7 @@
   "scripts": {
     "web": "pnpm --filter web dev",
     "mobile": "yarn workspace makincome-gym start",
-    "build:web": "yarn workspace @makincome-gym/web build",
+    "build:web": "pnpm --filter @makincome-gym/web build",
     "build:mobile": "yarn workspace makincome-gym build",
     "build:shared": "yarn workspace @makincome-gym/shared build",
     "test": "yarn workspaces run test",
