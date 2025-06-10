@@ -110,3 +110,205 @@
   color: #721c24;
   border: 1px solid #f5c6cb;
 } 
+
+.login-split-bg {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  background: #f1f5f9;
+  align-items: center;
+  justify-content: center;
+}
+.login-split-left {
+  flex: 1.1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  min-width: 320px;
+  overflow: hidden;
+  height: 100vh;
+}
+.login-gym-photo {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  filter: brightness(0.92);
+}
+.login-left-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+  background: linear-gradient(0deg, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.01) 100%);
+}
+.login-logo {
+  height: 28px;
+  margin-bottom: 1.5rem;
+}
+.login-title {
+  color: #fff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.13);
+}
+.login-split-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8fafc;
+  min-width: 320px;
+  height: 100vh;
+}
+.login-welcome-box {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 32px 0 rgba(31, 38, 135, 0.08);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+.login-role-cards {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  justify-content: center;
+}
+.login-role-card {
+  background: #f8fafc;
+  border: 2px solid #e5e7eb;
+  border-radius: 1.2rem;
+  padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+  min-width: 160px;
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: border 0.18s, box-shadow 0.18s, background 0.18s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  font-size: 1.1rem;
+}
+.login-role-card.selected, .login-role-card:hover {
+  border: 2.5px solid #2563eb;
+  background: #e0e7ff;
+  box-shadow: 0 4px 16px #2563eb22;
+}
+.login-role-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.2rem;
+}
+.login-role-title {
+  font-weight: 700;
+  color: #18181b;
+  text-align: center;
+  font-size: 1.1rem;
+}
+.login-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 1.5rem;
+}
+.login-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+  transition: border 0.18s;
+  outline: none;
+}
+.login-input:focus {
+  border: 1.5px solid #2563eb;
+}
+.login-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 2rem;
+  padding: 0.9rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.login-btn:hover {
+  background: #1d4ed8;
+}
+.login-btn:disabled {
+  background: #93c5fd;
+  cursor: not-allowed;
+}
+.login-message {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0.7rem;
+  padding: 0.7rem 1rem;
+}
+.login-message.error {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.login-message.success {
+  background: #dcfce7;
+  color: #166534;
+}
+@media (max-width: 900px) {
+  .login-split-bg {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  .login-split-left, .login-split-right {
+    min-width: 0;
+    width: 100vw;
+    height: 40vh;
+    flex: none;
+  }
+  .login-split-left {
+    height: 32vh;
+  }
+  .login-gym-photo {
+    height: 32vh;
+  }
+  .login-split-right {
+    height: auto;
+    min-height: 60vh;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2rem;
+  }
+  .login-welcome-box {
+    margin: 0 auto;
+    padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+    max-width: 98vw;
+  }
+  .login-role-cards {
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  .login-role-card {
+    min-width: 0;
+    width: 100%;
+    padding: 1.5rem 0.7rem 1.2rem 0.7rem;
+  }
+} 

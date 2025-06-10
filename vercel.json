@@ -1,0 +1,12 @@
+{
+  "buildCommand": "yarn build:web",
+  "outputDirectory": "apps/web/dist",
+  "installCommand": "yarn install",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+} 

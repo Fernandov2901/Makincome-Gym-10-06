@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import supabase from '../supabaseClient'
 import UserRegistration from './UserRegistration'
-import PaymentPlans from './PaymentPlans'
+import PaymentPlans from './payment-plans/payment-plans'
 import Revenue from './Revenue'
 import './Dashboard.css'
 

@@ -10,6 +10,7 @@ const ClientDashboard = () => {
   const [availableClasses, setAvailableClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [allRegisteredClasses, setAllRegisteredClasses] = useState([]);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -111,13 +112,13 @@ const ClientDashboard = () => {
     { label: 'Personal Best (Deadlift)', value: '150kg' },
   ];
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <div className="loading">Loading...</div>;
 
   return (
     <div style={{ minHeight: '100vh', width: '100%', margin: 0, padding: 0, background: '#fff' }}>
       {/* Header */}
       <header style={{
-        width: '100vw',
+        width: '100%',
         background: '#fff',
         borderBottom: '1px solid #e5e7eb',
         padding: 0,
@@ -129,18 +130,98 @@ const ClientDashboard = () => {
         right: 0,
         margin: 0
       }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 2rem', minHeight: 64 }}>
-          <div style={{ display: 'flex', alignItems: 'center', margin: 0, padding: 0 }}>
-            <img src={logoMakincome} alt="Makincome Logo" style={{ height: 40, margin: 0, padding: 0, display: 'block' }} />
+        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', minHeight: 64 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={logoMakincome} alt="Makincome Logo" style={{ height: 40 }} />
           </div>
-          <nav style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
-            <Link to="/client" style={{ fontWeight: 600, color: location.pathname === '/client' ? '#2196f3' : '#222', textDecoration: 'none', fontSize: '1.1rem' }}>Dashboard</Link>
-            <Link to="/client/schedule" style={{ fontWeight: 600, color: location.pathname.startsWith('/client/schedule') ? '#2196f3' : '#222', textDecoration: 'none', fontSize: '1.1rem' }}>Schedule Classes</Link>
-            <Link to="/client/evolution" style={{ fontWeight: 600, color: location.pathname.startsWith('/client/evolution') ? '#2196f3' : '#222', textDecoration: 'none', fontSize: '1.1rem' }}>Evolution Tracker</Link>
-            <button onClick={handleSignOut} style={{ marginLeft: 24, background: '#f87171', color: '#fff', border: 'none', borderRadius: 20, padding: '0.5rem 1.2rem', fontWeight: 700, fontSize: '1rem', cursor: 'pointer' }}>Sign Out</button>
+          
+          {/* Mobile menu button */}
+          <button 
+            className="mobile-nav-toggle"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            style={{ display: 'none' }}
+          >
+            {isMobileMenuOpen ? '✕' : '☰'}
+          </button>
+
+          {/* Navigation menu */}
+          <nav className={`nav-menu ${isMobileMenuOpen ? 'active' : ''}`} style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+            <Link 
+              to="/client" 
+              style={{ 
+                fontWeight: 600, 
+                color: location.pathname === '/client' ? '#2196f3' : '#222', 
+                textDecoration: 'none', 
+                fontSize: '1.1rem',
+                padding: '0.5rem'
+              }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Dashboard
+            </Link>
+            <Link 
+              to="/client/schedule" 
+              style={{ 
+                fontWeight: 600, 
+                color: location.pathname.startsWith('/client/schedule') ? '#2196f3' : '#222', 
+                textDecoration: 'none', 
+                fontSize: '1.1rem',
+                padding: '0.5rem'
+              }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Schedule Classes
+            </Link>
+            <Link 
+              to="/client/evolution" 
+              style={{ 
+                fontWeight: 600, 
+                color: location.pathname.startsWith('/client/evolution') ? '#2196f3' : '#222', 
+                textDecoration: 'none', 
+                fontSize: '1.1rem',
+                padding: '0.5rem'
+              }}
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              Evolution Tracker
+            </Link>
+            <button 
+              onClick={handleSignOut} 
+              style={{ 
+                background: '#f87171', 
+                color: '#fff', 
+                border: 'none', 
+                borderRadius: 20, 
+                padding: '0.5rem 1.2rem', 
+                fontWeight: 700, 
+                fontSize: '1rem', 
+                cursor: 'pointer',
+                margin: '0.5rem'
+              }}
+            >
+              Sign Out
+            </button>
             <div
-              onClick={() => navigate('/client/profile')}
-              style={{ marginLeft: 16, width: 36, height: 36, borderRadius: '50%', background: '#e0e7ff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, color: '#2196f3', fontSize: 18, cursor: 'pointer', border: location.pathname.startsWith('/client/profile') ? '2px solid #2196f3' : 'none', transition: 'border 0.2s' }}
+              onClick={() => {
+                navigate('/client/profile');
+                setIsMobileMenuOpen(false);
+              }}
+              style={{ 
+                width: 36, 
+                height: 36, 
+                borderRadius: '50%', 
+                background: '#e0e7ff', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                fontWeight: 700, 
+                color: '#2196f3', 
+                fontSize: 18, 
+                cursor: 'pointer', 
+                border: location.pathname.startsWith('/client/profile') ? '2px solid #2196f3' : 'none', 
+                transition: 'border 0.2s',
+                margin: '0.5rem'
+              }}
               title="Profile"
             >
               {client?.first_name?.[0] || '?'}
@@ -148,40 +229,75 @@ const ClientDashboard = () => {
           </nav>
         </div>
       </header>
-      {/* Main content: show dashboard only on /client, otherwise render nested routes */}
+
+      {/* Main content */}
       {location.pathname === '/client' ? (
-        <div style={{ width: '100%', maxWidth: 1100, margin: '0 auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', padding: '2rem 0' }}>
-          <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: 32, color: '#18181b', textAlign: 'center', letterSpacing: '-0.03em' }}>
+        <div className="container" style={{ padding: '2rem 1rem' }}>
+          <h1 style={{ 
+            fontSize: 'clamp(2rem, 5vw, 3rem)', 
+            fontWeight: 900, 
+            marginBottom: '2rem', 
+            color: '#18181b', 
+            textAlign: 'center', 
+            letterSpacing: '-0.03em' 
+          }}>
             {now.getHours() < 12 ? 'Good morning' : now.getHours() < 18 ? 'Good afternoon' : 'Good evening'}, {client?.first_name}!
           </h1>
+
           {/* Stats cards */}
-          <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap', justifyContent: 'center', marginBottom: 40 }}>
-            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '2rem 2.5rem', minWidth: 180, textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div style={{ fontSize: '2.2rem', fontWeight: 700, color: '#2196f3' }}>{classesThisMonth}</div>
+          <div className="stats-grid" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
+            gap: '1.5rem', 
+            marginBottom: '2.5rem' 
+          }}>
+            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '1.5rem', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 700, color: '#2196f3' }}>{classesThisMonth}</div>
               <div style={{ color: '#64748b', fontWeight: 500 }}>Classes This Month</div>
             </div>
-            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '2rem 2.5rem', minWidth: 180, textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div style={{ fontSize: '2.2rem', fontWeight: 700, color: '#2196f3' }}>{plan ? plan.name : '-'}</div>
+            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '1.5rem', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 700, color: '#2196f3' }}>{plan ? plan.name : '-'}</div>
               <div style={{ color: '#64748b', fontWeight: 500 }}>Plan</div>
             </div>
-            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '2rem 2.5rem', minWidth: 180, textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div style={{ fontSize: '2.2rem', fontWeight: 700, color: '#2196f3' }}>{plan ? `€${plan.price}` : '-'}</div>
+            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '1.5rem', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 700, color: '#2196f3' }}>{plan ? `€${plan.price}` : '-'}</div>
               <div style={{ color: '#64748b', fontWeight: 500 }}>Plan Price</div>
             </div>
-            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '2rem 2.5rem', minWidth: 180, textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
-              <div style={{ fontSize: '2.2rem', fontWeight: 700, color: '#2196f3' }}>{evolutionStats[0].value}</div>
+            <div style={{ background: '#f8fafc', borderRadius: 16, padding: '1.5rem', textAlign: 'center', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+              <div style={{ fontSize: 'clamp(1.5rem, 4vw, 2.2rem)', fontWeight: 700, color: '#2196f3' }}>{evolutionStats[0].value}</div>
               <div style={{ color: '#64748b', fontWeight: 500 }}>{evolutionStats[0].label}</div>
             </div>
           </div>
+
           {/* Upcoming Classes */}
-          <div style={{ width: '100%', maxWidth: 1100, margin: '0 auto', marginBottom: 40 }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: 24, textAlign: 'center', color: '#18181b' }}>Upcoming Classes</h2>
+          <div style={{ width: '100%', marginBottom: '2.5rem' }}>
+            <h2 style={{ 
+              fontSize: 'clamp(1.5rem, 4vw, 2rem)', 
+              fontWeight: 800, 
+              marginBottom: '1.5rem', 
+              textAlign: 'center', 
+              color: '#18181b' 
+            }}>
+              Upcoming Classes
+            </h2>
             {upcomingClasses.length === 0 ? (
               <div style={{ color: '#64748b', textAlign: 'center' }}>No upcoming classes registered.</div>
             ) : (
-              <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <div className="classes-grid" style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                gap: '1.5rem' 
+              }}>
                 {upcomingClasses.map(cls => (
-                  <div key={cls.id} style={{ background: '#fff', borderRadius: 12, minWidth: 260, maxWidth: 340, flex: '1 1 260px', padding: '1.2rem 1.5rem', marginBottom: 18, boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <div key={cls.id} style={{ 
+                    background: '#fff', 
+                    borderRadius: 12, 
+                    padding: '1.2rem', 
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.05)', 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    alignItems: 'flex-start' 
+                  }}>
                     <div style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: 4 }}>{cls.name}</div>
                     <div style={{ color: '#64748b', fontSize: 15, marginBottom: 6 }}>{cls.date} {cls.start_time}</div>
                     {cls.description && <div style={{ color: '#64748b', fontSize: 15, marginBottom: 6 }}>{cls.description}</div>}
